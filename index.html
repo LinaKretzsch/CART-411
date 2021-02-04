@@ -6,6 +6,7 @@
     <style>
       body{
         margin:0;
+        overflow: hidden;
       }
       canvas{
         display:block;
@@ -15,7 +16,7 @@
   <body>
     <script src="three.js"</script>
     <script type="module" src="GLTFLoader.js"</script>
-    <script type="module" src="OrbitControls.js"</script>
+    <!-- <script type="module" src="OrbitControls.js"</script> -->
     <script type="module">
       import {GLTFLoader} from "./GLTFLoader.js";
       // import {OrbitControls} from "./OrbitControls.js";
@@ -33,7 +34,7 @@
 
       var loader = new GLTFLoader();
 
-      var obj;
+      let obj;
       loader.load("visual.gltf", function(gltf){
         obj = gltf.scene;
         scene.add(gltf.scene);
@@ -41,17 +42,22 @@
       scene.background = new THREE.Color(0Xffffff);
       var light = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
       scene.add(light);
-      camera.position.set(0,5,10);
+      camera.position.set(0,6,10);
+
       function animate(){
         requestAnimationFrame(animate);
-        obj.rotation.y += 0.01;
+        obj.rotation.y += 0.005;
         renderer.render(scene, camera);
       }
       animate();
 
-      // const controls = new OrbitControls( camera, renderer.domElement );
-      // camera.position.set( 0, 20, 100 );
-      // controls.update();
+      window.addEventListener('scroll', function(){
+        // requestAnimationFrame(animate);
+        obj.rotation.y += 0.005;
+        console.log("Scrolling");
+        // renderer.render(scene, camera);
+      }, false);
+
 
     </script>
 
