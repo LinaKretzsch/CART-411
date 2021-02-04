@@ -1,1 +1,59 @@
-<canvas id="c"></canvas>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>3D Model</title>
+    <style>
+      body{
+        margin:0;
+      }
+      canvas{
+        display:block;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="three.js"</script>
+    <script type="module" src="GLTFLoader.js"</script>
+    <script type="module" src="OrbitControls.js"</script>
+    <script type="module">
+      import {GLTFLoader} from "./GLTFLoader.js";
+      // import {OrbitControls} from "./OrbitControls.js";
+
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth/window.innerHeight,
+        0.01,
+        1000
+      );
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      var loader = new GLTFLoader();
+
+      var obj;
+      loader.load("visual.gltf", function(gltf){
+        obj = gltf.scene;
+        scene.add(gltf.scene);
+      });
+      scene.background = new THREE.Color(0Xffffff);
+      var light = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
+      scene.add(light);
+      camera.position.set(0,5,10);
+      function animate(){
+        requestAnimationFrame(animate);
+        obj.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // const controls = new OrbitControls( camera, renderer.domElement );
+      // camera.position.set( 0, 20, 100 );
+      // controls.update();
+
+    </script>
+
+  </body>
+</html>
