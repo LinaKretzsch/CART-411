@@ -16,9 +16,14 @@
   <body>
     <script src="three.js"</script>
     <script type="module" src="GLTFLoader.js"</script>
-    <!-- <script type="module" src="OrbitControls.js"</script> -->
+    <!-- <script type="module" src="FBXLoader.js"</script> -->
+
+
+
     <script type="module">
+
       import {GLTFLoader} from "./GLTFLoader.js";
+      // import {FBXLoader} from "./FBXLoader.js";
       // import {OrbitControls} from "./OrbitControls.js";
 
       var scene = new THREE.Scene();
@@ -35,29 +40,30 @@
       var loader = new GLTFLoader();
 
       let obj;
-      loader.load("visual.gltf", function(gltf){
+      loader.load("v2.gltf", function(gltf){
         obj = gltf.scene;
+        obj.receiveShadow = true;
         scene.add(gltf.scene);
+
       });
-      scene.background = new THREE.Color(0Xffffff);
-      var light = new THREE.HemisphereLight(0xffffff, 0x000000, 2);
+      scene.background = new THREE.Color(0X32194E);
+      var light = new THREE.HemisphereLight(0xffffff, 0x000000, 1);
       scene.add(light);
-      camera.position.set(0,6,10);
+      camera.position.set(0,4,10);
 
       function animate(){
         requestAnimationFrame(animate);
         obj.rotation.y += 0.005;
         renderer.render(scene, camera);
+        renderer.outputEncoding = THREE.sRGBEncoding;
       }
+
+
+
+
+
+
       animate();
-
-      window.addEventListener('scroll', function(){
-        // requestAnimationFrame(animate);
-        obj.rotation.y += 0.005;
-        console.log("Scrolling");
-        // renderer.render(scene, camera);
-      }, false);
-
 
     </script>
 
